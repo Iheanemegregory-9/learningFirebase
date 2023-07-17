@@ -1,0 +1,36 @@
+.form{
+    display: flex;
+    justify-content: center;
+    /* align-content: center; */
+}
+
+form{
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+input{
+    padding: 10px 15px;
+    outline: none;
+}
+button{
+    outline: none;
+    color: white;
+    background-color: brown;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn{
+    display: flex;
+    gap: 20px;
+}
+
+.err{
+    color: white;
+    background-color: rgba(245, 67, 67, 0.705);
+    padding: 20px;
+    border-radius: 7px;
+}

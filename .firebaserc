@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "free-code-angulr-fire": {
+      "hosting": {
+        "angular-fire": [
+          "free-code-angulr-fire"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "free-code-angulr-fire"
+  }
+}

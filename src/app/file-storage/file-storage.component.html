@@ -1,0 +1,8 @@
+<form #f="ngForm">
+    <input type="file">
+    <button (click)="uploadFile()">Send to DB</button>
+</form>
+
+<p>{{uploadProgress}}</p>
+<a href="uploadLink">{{uploadLink}}</a>
+<p>{{uploadError}}</p>

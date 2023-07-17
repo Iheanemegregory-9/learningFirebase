@@ -1,0 +1,40 @@
+<div class="form">
+    <form #f="ngForm">
+        <input type="email" name="email" [(ngModel)]="email" placeholder="email">
+        <input type="password" name="password" [(ngModel)]="password" placeholder="password">
+        <input type="number" name="age" [(ngModel)]="age" placeholder="age">
+        <div class="btn">
+            <button (click)="create(email, password)">Submit</button>
+            <button (click)="logIn(email, password)">Sign in</button>
+            <button (click)="googleSignin()">Sign in with Google</button>
+            <!-- <button (click)="loadDataToDatabase(email, password, age)">LOAD DATA</button> -->
+            <button (click)="loadDataFromDB()">LOAD DATA from DB</button>
+            <button (click)="filterByAge(age)">Filter by Age</button>
+            <button (click)="filterByEmail(email)">Filter by Email</button>
+            <!-- <button (click)="updateDataInDB(email, password, id)">Update DATA in DB</button> -->
+        </div>
+    </form>
+</div>
+
+<div *ngFor="let data of filteredData">
+    <p>{{data.email}}</p> 
+    <p>{{data.password}}</p>
+    <p>{{data.age}}</p>
+    <p>{{data.id}}</p>
+</div>
+
+<div *ngFor="let data of userData" >
+    <p>{{data.email}}</p> 
+    <p>{{data.password}}</p>
+    <p>{{data.age}}</p>
+    <p>{{data.id}}</p>
+
+    <div class="btn">
+        <button (click)="updateDataInDB(email, password, data.id)">Edit</button> <br><br>
+        <button (click)="deleteDatafromDB(data.id)">Delete</button>
+        <!-- <button (click)="updateAge(age, data.id)">Add Age</button> --> 
+    </div>
+</div>
+
+
+<p class="err" *ngIf="isErr">{{errMsg}}</p>
