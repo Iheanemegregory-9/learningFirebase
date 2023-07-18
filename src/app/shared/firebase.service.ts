@@ -1,8 +1,9 @@
 // import { query } from '@angular/animations';
 import { Injectable } from '@angular/core';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, Auth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, user, getAuth, signOut } from '@angular/fire/auth';
 import { collection, addDoc, Firestore, getDocs, collectionData, updateDoc, doc, deleteDoc, where, query } from '@angular/fire/firestore';
 import { ref, getDownloadURL, Storage, uploadBytesResumable } from '@angular/fire/storage';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class FirebaseService {
   progress:any;
   uploadErr:any;
   downloadLink:any;
+  // currentUser:User | null;
 
    metadata = {
     contentType: 'image/png'
@@ -22,7 +24,12 @@ export class FirebaseService {
 
   provider = new GoogleAuthProvider();
 
-  constructor(private auth:Auth, private firestore: Firestore, private storage: Storage ) { }
+  constructor(
+    private auth:Auth, 
+    private firestore: Firestore, 
+    private storage: Storage,
+    private route: Router
+    ) { }
 
 
   uploadFile(){
@@ -41,6 +48,30 @@ export class FirebaseService {
         console.log('File available at', downloadURL);
       })
     })
+  }
+
+  // isLoggedIn(){
+  //   this.auth.onAuthStateChanged((user)=>{
+  //    if(user == null){
+  //       console.log("please login to your account");
+  //       console.log(user);
+        
+  //    } else{
+  //     console.log(user);
+  //    }
+  //   })
+  // }
+
+  userLogged(){
+    onAuthStateChanged(this.auth, (data)=>{
+      console.log(data);
+      
+    })
+  }
+
+
+  signOut(){
+    signOut(this.auth)
   }
 
   
@@ -62,7 +93,7 @@ export class FirebaseService {
    return signInWithPopup(this.auth, this.provider)
   }
 
-  createCollection(email:string, password:string, age:string){
+  createCollection(email:string, password:string, age:number){
     const colRef = collection(this.firestore, 'users');
     return addDoc(colRef, {
       email,
