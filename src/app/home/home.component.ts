@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../shared/firebase.service';
-import { doc } from '@angular/fire/firestore';
+// import { doc } from '@angular/fire/firestore';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,18 +21,26 @@ userData:any;
 
   constructor(private fireService : FirebaseService){}
 
+  clearData(){
+    this.email = '';
+    this.password = '';
+    this.age
+  }
+
   ngOnInit(): void {
-    // this.loadDataFromDB()
+    this.loadDataFromDB()
     // this.filterByAge(this.age)
     this.isUserLoggedIn()
+
+    this.fireService.userLogged()
   }
 
 
 
   create(email:string, password:string){
     this.fireService.createAccount(email, password).then((response)=>{
-      console.log(response.user);
-      
+      // console.log(response.user);
+      this.clearData()
     },err =>{
       this.isErr = true;
       this.errMsg = err.message;
@@ -76,10 +84,12 @@ userData:any;
     })
   }
 
-  loadDataToDatabase(email:string, password:string, age:string){
+  loadDataToDatabase(email:string, password:string, age:number){
     this.fireService.createCollection(email, password, age).then((res)=>{
-      console.log(res);
-      
+      this.userData = res;
+      console.log(this.userData);
+      alert("Data Added")
+      this.clearData()
     }, err=>{
       this.isErr = true;
       this.errMsg = err.message;
@@ -143,7 +153,7 @@ userData:any;
   }
 
   isUserLoggedIn() {
-    this.fireService.isLoggedIn()
+    // this.fireService.isLoggedIn()
   }
 
 }
