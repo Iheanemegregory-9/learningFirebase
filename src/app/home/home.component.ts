@@ -22,8 +22,9 @@ userData:any;
   constructor(private fireService : FirebaseService){}
 
   ngOnInit(): void {
-    this.loadDataFromDB()
+    // this.loadDataFromDB()
     // this.filterByAge(this.age)
+    this.isUserLoggedIn()
   }
 
 
@@ -55,6 +56,11 @@ userData:any;
       }, 5000);
       
     })
+  }
+
+
+  logOut(){
+    this.fireService.signOut()
   }
 
   googleSignin(){
@@ -134,6 +140,10 @@ userData:any;
       this.userData = res;
       
     })
+  }
+
+  isUserLoggedIn() {
+    this.fireService.isLoggedIn()
   }
 
 }
